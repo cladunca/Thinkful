@@ -1,0 +1,35 @@
+-- 1. Highest temp is 134 found in ZIP code 94063
+SELECT
+	MAX(MaxTemperatureF) as max_temp,
+	ZIP
+FROM
+	weather
+GROUP by ZIP;
+
+--2.
+
+SELECT
+	start_station,
+	COUNT(trip_id) as trip_count
+FROM
+	trips
+GROUP by start_station
+
+--3. This query reveals multiple trips with a duration of 60.
+
+SELECT
+	trip_id,
+	MIN(duration) as min_duration
+FROM
+	trips
+GROUP by trip_id
+ORDER by min_duration
+
+--4.
+
+SELECT
+	end_station,
+	AVG(duration) as trip_duration
+FROM
+	trips
+GROUP by end_station;
