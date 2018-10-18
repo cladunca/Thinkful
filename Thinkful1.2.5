@@ -1,0 +1,51 @@
+-- 1. The longest trips on rainy days are as follows:
+--    San Francisco Caltrain (Townsend at 4th) -> Grant Avenue at Columbus Avenue
+--    South Van Ness at Market -> South Van Ness at Market
+--    Palo Alto Caltrain Station -> Palo Alto Caltrain Station
+
+SELECT
+	t.duration,
+	w.Events,
+	t.start_date,
+	t.end_date,
+	t.start_station,
+	t.end_station	
+FROM
+	trips t
+JOIN
+	weather w
+ON
+	SUBSTRING(t.start_date, 1, 10) = w.Date
+WHERE
+	w.Events = 'Rain'
+ORDER by t.duration DESC
+
+--2. Santa Clara at Almaden
+
+SELECT
+	stations.name,
+	COUNT(*)
+FROM
+	stations
+JOIN
+	status
+ON 
+	status.station_id = stations.station_id
+WHERE
+	status.docks_available = 0
+GROUP by stations.name;
+
+-- 3. 
+
+SELECT
+	t.start_station,
+	s.dockcount,
+	COUNT(*)
+FROM
+	stations s
+JOIN
+	trips t
+ON
+	s.name = t.start_station
+GROUP by t.start_station, s.dockcount
+ORDER by s.dockcount
